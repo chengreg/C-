@@ -1,0 +1,4 @@
+﻿  client.cpp
+client.obj : error LNK2019: 无法解析的外部符号 __imp_WSAStartup，函数 main 中引用了该符号
+client.obj : error LNK2019: 无法解析的外部符号 __imp_WSACleanup，函数 main 中引用了该符号
+C:\Users\pigba\source\repos\C++网络开发\x64\Debug\EasyTCPClient.exe : fatal error LNK1120: 2 个无法解析的外部命令
