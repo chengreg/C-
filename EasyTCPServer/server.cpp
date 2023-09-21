@@ -53,22 +53,54 @@ int main()
 
 	char msgBuf[] = "Hello, I'm Server.";
 
+	_clientSock = accept(_sock, (sockaddr*)&clientAddr, &nAddrLen);
+	if (_clientSock == INVALID_SOCKET)
+	{
+		printf("appect error: 无效客户端socket...\n");
+	}
+
+	printf("新客户端加入：Socket = %d, IP = %s \n", (int)_clientSock, inet_ntoa(clientAddr.sin_addr));
+
+	char _recvBuf[128] = {};
 	while (true)
 	{
-		_clientSock = accept(_sock, (sockaddr*)&clientAddr, &nAddrLen);
-		if (_clientSock == INVALID_SOCKET)
+		// 5. 接收客户端数据
+		int nLen = recv(_clientSock, _recvBuf, 128, 0);
+		if (nLen <= 0)
 		{
-			printf("appect error: 无效客户端socket...\n");
+			printf("客户端退出，任务结束\n");
+			break;
 		}
 
-		printf("新客户端加入：IP = %s \n", inet_ntoa(clientAddr.sin_addr));
+		printf("接收到客户端数据：%s \n", _recvBuf);
 
-		//5. send向客户端发送一条数据
-		send(_clientSock, msgBuf, strlen(msgBuf) + 1, 0);
+		// 6. 处理请求
+		if (strcmp(_recvBuf, "getName") == 0)
+		{
+			char msgBuf[] = "小明";
+			//7. send向客户端发送一条数据
+			send(_clientSock, msgBuf, strlen(msgBuf) + 1, 0);
+		}
+		else if (strcmp(_recvBuf, "getAge") == 0)
+		{
+			char msgBuf[] = "80";
+			//7. send向客户端发送一条数据
+			send(_clientSock, msgBuf, strlen(msgBuf) + 1, 0);
+
+		}
+		else
+		{
+			char msgBuf[] = "???";
+			//7. send向客户端发送一条数据
+			send(_clientSock, msgBuf, strlen(msgBuf) + 1, 0);
+		}
+
+
+		
 	}
 
 	
-	//6. 关闭socket closesocket
+	//8. 关闭socket closesocket
 	closesocket(_sock);
 
 	/*---------------------------------------------------------- */

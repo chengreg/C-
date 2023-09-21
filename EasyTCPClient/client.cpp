@@ -1,6 +1,7 @@
 // 2023.09.21
 
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 
 #define WIN32_LEAN_AND_MEAN
 #include<WinSock2.h>
@@ -37,29 +38,49 @@ int main()
 	int connect_ret = connect(_sock, (sockaddr*) & _sin, sizeof(sockaddr_in));
 	if (connect_ret == SOCKET_ERROR)
 	{
-		printf("connet error: 连接失败...\n");
+		printf("connet error: 连接服务器失败...\n");
 	}
 	else
 	{
-		printf("连接成功...\n");
-	}
-	
-	// 3. 接收服务器信息recv
-	char recvBuf[256] = {};
-	int nlen = recv(_sock, recvBuf, 256, 0);
-	if (nlen > 0)
-	{
-		printf("接收到的数据： %s\n", recvBuf);
+		printf("连接服务器成功...\n");
 	}
 
 	
-	// 4. 关闭socket closesocket
+	while (true)
+	{
+		// 3. 输入请求命令
+		char cmdBuf[128] = {};
+		scanf("%s",cmdBuf);
+
+		// 4. 处理请求
+		if (strcmp(cmdBuf, "exit") == 0)
+		{
+			printf("收到退出命令exit，已退出\n");
+			break;
+		}
+		else
+		{
+			// 5. 向服务器发送请求命令
+			send(_sock, cmdBuf, 128, 0);
+		}
+
+		// 6. 接收服务器信息
+		char recvBuf[128] = {};
+		int nlen = recv(_sock, recvBuf, 128, 0);
+		if (nlen > 0)
+		{
+			printf("接收到服务器的数据： %s\n", recvBuf);
+		}
+	}
+	
+	// 7. 关闭socket closesocket
 	closesocket(_sock);
 	//---------------------------------------------------------
 
 	// 清除windows socket环境
 	WSACleanup();
 
+	printf("已退出\n");
 	getchar();
 	return 0;
 }

@@ -1,3 +1,5 @@
 ﻿  server.cpp
-C:\Users\pigba\source\repos\C++网络开发\EasyTCPServer\server.cpp(67,50): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\pigba\source\repos\C++网络开发\EasyTCPServer\server.cpp(82,51): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\pigba\source\repos\C++网络开发\EasyTCPServer\server.cpp(88,51): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+C:\Users\pigba\source\repos\C++网络开发\EasyTCPServer\server.cpp(95,51): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
   EasyTCPServer.vcxproj -> C:\Users\pigba\source\repos\C++网络开发\bin\x64\Debug\EasyTCPServer.exe
